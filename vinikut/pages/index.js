@@ -3,6 +3,8 @@ import MainGrid from '../src/components/MainGrid';
 import Box from '../src/components/Box';
 import { AlurakutMenu, AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet } from '../src/lib/VinikutCommons';
 import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations';
+import nookies from 'nookies';
+import jwt from 'jsonwebtoken';
 
 
 function ProfileSideBar(propriedades){
@@ -33,22 +35,22 @@ function ProfileRelationsBox(propriedades){
         Seguidores ({propriedades.items.length})
       </h2>
       <ul>
-        {propriedades.items.map((itemAtual) => {
+        {/*propriedades.items.map((itemAtual) => {
           return(
             <li key={itemAtual.id}>
-              <img src={`https://github.com/${itemAtual.login}.png`} className="img" />
+              <img src={`https://github.com/${itemAtual.login}.png`}/>
               <span>{itemAtual.login}</span>
             </li>
           )
-        })}         
+        })*/}         
       </ul>
     </ProfileRelationsBoxWrapper>
   )
 }
 
-export default function Home() {
+export default function Home(props) {
 
-  const usuarioAleatorio = 'ivinib';
+  const usuarioAleatorio = props.githubUser;
   const [comunidades, setComunidades] = React.useState([]);
 
   const pessoasFavoritas = [
@@ -219,3 +221,31 @@ fetch('https://graphql.datocms.com/', {
   );
 }
 
+export async function getServerSideProps(context) {
+  const cookies = nookies.get(context);
+  const token = cookies.USER_TOKEN;
+
+  const { isAuthenticated } = await fetch ('https://alurakut.vercel.app/api/auth', {
+    headers: {
+      Authorization: token
+    }
+  })
+  .then((resposta) => resposta.json())
+
+  if(!isAuthenticated){
+    return{
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      }
+    }
+  }
+
+  const { githubUser } = jwt.decode(token);
+
+  return{
+    props: {
+      githubUser
+    },
+  }
+}
