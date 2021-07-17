@@ -59,6 +59,7 @@ export default function Home(props) {
     'ivinib',
     'ivinib',
     'ivinib',
+    'ivinib',
     'ivinib'    
   ]
 
@@ -66,7 +67,7 @@ export default function Home(props) {
 
 //GET
 React.useEffect(function(){
-    fetch('https://api.github.com/users/ivinib/followers')
+    fetch('https://api.github.com/users/${usuarioAleatorio}/followers')
     .then(function(respostaDoServidor) {
       return respostaDoServidor.json();
     })
@@ -80,16 +81,15 @@ React.useEffect(function(){
 fetch('https://graphql.datocms.com/', {
   method: 'POST',
   headers: {
-    'Authorization': '325716c3fa3e51e668e1caf98928db',
+    'Authorization': '37d84ef7fc069fbd4c069471dbc7b2',
     'Content-Type': 'application/json',
-    'Accept': 'application/json'
+    'Accept': 'application/json',
   },
-  body: JSON.stringify({"query": `query{
-    allCommunities{
+  body: JSON.stringify({ "query": `query {
+    allCommunities {
       id
       title
       imageUrl
-      creatorSlug
     }
   }`})
 })
@@ -97,9 +97,7 @@ fetch('https://graphql.datocms.com/', {
 .then((respostaCompleta) =>{
   const comunidadesVindasDoDato = respostaCompleta.data.allCommunities;
 
-  console.log(comunidadesVindasDoDato);
-
-  setComunidades[comunidadesVindasDoDato];
+  setComunidades(comunidadesVindasDoDato);
 })
 
   return( 
@@ -123,9 +121,6 @@ fetch('https://graphql.datocms.com/', {
               
               const dadosDoForm = new FormData(e.target);
 
-              console.log('Campo: ', dadosDoForm.get('title'));
-              console.log('Campo: ', dadosDoForm.get('image'));
-
               const comunidade = {
                 title: dadosDoForm.get('title'),
                 imageUrl: dadosDoForm.get('image'),
@@ -140,7 +135,7 @@ fetch('https://graphql.datocms.com/', {
                 body: JSON.stringify(comunidade),
               })
               .then(async (response) => {
-                const dados = response.json();
+                const dados = await response.json();
                 console.log(dados.registroCriado);
                 const comunidade = dados.registroCriado;
                 const comunidadesAtualizadas  = [...comunidades, comunidade];
@@ -184,7 +179,7 @@ fetch('https://graphql.datocms.com/', {
             Comunidades ({comunidades.length})
           </h2>
           <ul>
-            {comunidades.map((itemAtual) => {
+            {comunidades.slice(0,6).map((itemAtual) => {
               return(
                 <li key={itemAtual.id}>
                   <a href={`/communities/${itemAtual.id}`}>
@@ -202,7 +197,7 @@ fetch('https://graphql.datocms.com/', {
            Pessoas({pessoasFavoritas.length})
          </h2>
          <ul>
-           {pessoasFavoritas.map((itemAtual) => {
+           {pessoasFavoritas.slice(0,6).map((itemAtual) => {
              return(
                <li key={itemAtual}>
                  <a href={`/users/${itemAtual}`}>

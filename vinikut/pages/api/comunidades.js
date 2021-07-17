@@ -1,4 +1,4 @@
-import { SiteClient } from datocms-client;
+import { SiteClient } from 'datocms-client';
 
 export default async function recebedorDeRequests(request, response){
 
@@ -9,12 +9,14 @@ export default async function recebedorDeRequests(request, response){
 
         //IMPORTANTE: Validar os dados antes de fazer o cadastro
         const registroCriado = await client.items.create({// ID já é criado pelo dato
-            itemTyme: '966836',
+            itemType: "966836",
             ...request.body,
             /*title: "Teste de criação comunidade",
             imageUrl: "https://github.com/ivinib.png",
             creatorSlug: "ivinb"*/
         })
+
+        console.log(registroCriado);
 
         response.json({
             dados: 'Algum dado',
