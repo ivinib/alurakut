@@ -36,7 +36,7 @@ function ProfileRelationsBox(propriedades){
         Seguidores ({propriedades.items.length})
       </h2>
       <ul>
-        {propriedades.items.slice(0,6).map((itemAtual) => {
+        {/*propriedades.items.slice(0,6).map((itemAtual) => {
           return(
             <li key={itemAtual.id}>
               <a href={`/users/${itemAtual.login}`}>
@@ -45,7 +45,7 @@ function ProfileRelationsBox(propriedades){
               </a>
             </li>
           )
-        })}         
+        })*/}         
       </ul>
 
     </ProfileRelationsBoxWrapper>
@@ -60,7 +60,7 @@ export default function Home(props) {
   const [seguidores, setSeguidores] = React.useState([])
 
 //GET
-React.useEffect(function(){
+/*React.useEffect(function(){
     fetch(`https://api.github.com/users/${usuarioAleatorio}/followers`)
     .then(function(respostaDoServidor) {
       return respostaDoServidor.json();
@@ -69,10 +69,10 @@ React.useEffect(function(){
       setSeguidores(respostaCompleta)
    })
 }, [])
-
+*/
 //GraphQL
 //POST
-fetch('https://graphql.datocms.com/', {
+/*fetch('https://graphql.datocms.com/', {
   method: 'POST',
   headers: {
     'Authorization': '37d84ef7fc069fbd4c069471dbc7b2',
@@ -92,7 +92,7 @@ fetch('https://graphql.datocms.com/', {
   const comunidadesVindasDoDato = respostaCompleta.data.allCommunities;
 
   setComunidades(comunidadesVindasDoDato);
-})
+})*/
 
   return( 
     <>
@@ -130,7 +130,6 @@ fetch('https://graphql.datocms.com/', {
               })
               .then(async (response) => {
                 const dados = await response.json();
-                console.log(dados.registroCriado);
                 const comunidade = dados.registroCriado;
                 const comunidadesAtualizadas  = [...comunidades, comunidade];
                 setComunidades(comunidadesAtualizadas);
@@ -193,7 +192,7 @@ fetch('https://graphql.datocms.com/', {
 }
 
 export async function getServerSideProps(context) {
-  const cookies = nookies.get(context);
+ /* const cookies = nookies.get(context);
   const token = cookies.USER_TOKEN;
 
   const { isAuthenticated } = await fetch ('https://alurakut.vercel.app/api/auth', {
@@ -218,5 +217,5 @@ export async function getServerSideProps(context) {
     props: {
       githubUser
     },
-  }
+  }*/
 }

@@ -35,7 +35,7 @@ export function AlurakutMenu({ githubUser }) {
         </nav>
 
         <nav>
-          <a href={`/logout`}>
+          <a href={`../../logout`}>
             Sair
           </a>
           <div>
@@ -461,7 +461,7 @@ export const AlurakutStyles = css`
     width: 8px;
   }
   *::-webkit-scrollbar-track {
-    background: #f1f1f1; 
+    background: #FFF; 
   }
   *::-webkit-scrollbar-thumb {
     background: #888; 
