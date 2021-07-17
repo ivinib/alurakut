@@ -6,7 +6,7 @@ export default function LoginScreen() {
 
   const router = useRouter();
 
-  const [githubUser, setGithubUser] = React.useState('ivinib');
+  const [githubUser, setGithubUser] = React.useState('');
 
   return (
     <main style={{ display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -25,7 +25,7 @@ export default function LoginScreen() {
                 infosDoEvento.preventDefault();
 
                 console.log('Usuário: ', githubUser)
-                
+
                 fetch('https://alurakut.vercel.app/api/login', {
                     method: 'POST',
                     headers: {

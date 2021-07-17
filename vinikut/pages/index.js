@@ -21,6 +21,7 @@ function ProfileSideBar(propriedades){
           @{propriedades.githubUser}
         </a>
       </p>
+      
       <hr />
 
       <AlurakutProfileSidebarMenuDefault />
@@ -35,15 +36,18 @@ function ProfileRelationsBox(propriedades){
         Seguidores ({propriedades.items.length})
       </h2>
       <ul>
-        {/*propriedades.items.map((itemAtual) => {
+        {propriedades.items.slice(0,6).map((itemAtual) => {
           return(
             <li key={itemAtual.id}>
-              <img src={`https://github.com/${itemAtual.login}.png`}/>
-              <span>{itemAtual.login}</span>
+              <a href={`/users/${itemAtual.login}`}>
+                <img className="followers" src={`https://github.com/${itemAtual.login}.png`}/>
+                <span>{itemAtual.login}</span>
+              </a>
             </li>
           )
-        })*/}         
+        })}         
       </ul>
+
     </ProfileRelationsBoxWrapper>
   )
 }
@@ -67,7 +71,7 @@ export default function Home(props) {
 
 //GET
 React.useEffect(function(){
-    fetch('https://api.github.com/users/${usuarioAleatorio}/followers')
+    fetch(`https://api.github.com/users/${usuarioAleatorio}/followers`)
     .then(function(respostaDoServidor) {
       return respostaDoServidor.json();
     })
