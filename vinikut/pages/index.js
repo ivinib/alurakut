@@ -57,16 +57,6 @@ export default function Home(props) {
   const usuarioAleatorio = props.githubUser;
   const [comunidades, setComunidades] = React.useState([]);
 
-  const pessoasFavoritas = [
-    'ivinib',
-    'ivinib',
-    'ivinib',
-    'ivinib',
-    'ivinib',
-    'ivinib',
-    'ivinib'    
-  ]
-
   const [seguidores, setSeguidores] = React.useState([])
 
 //GET
@@ -195,25 +185,7 @@ fetch('https://graphql.datocms.com/', {
             })}            
           </ul>
       </ProfileRelationsBoxWrapper>
-
-      <ProfileRelationsBoxWrapper>
-         <h2 className="smallTitle">
-           Pessoas({pessoasFavoritas.length})
-         </h2>
-         <ul>
-           {pessoasFavoritas.slice(0,6).map((itemAtual) => {
-             return(
-               <li key={itemAtual}>
-                 <a href={`/users/${itemAtual}`}>
-                   <img src={`https://github.com/${itemAtual}.png`} />
-                   <span>{itemAtual}</span>
-                 </a>
-               </li>
-             )
-           })}            
-        </ul>
-           
-       </ProfileRelationsBoxWrapper>        
+    
       </div>
     </MainGrid>
     </>
